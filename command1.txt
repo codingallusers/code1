@@ -1,0 +1,21 @@
+cd foldername
+
+set JAVA_HOME="C:\Program Files\Java\jdk-11"
+set PATH=%JAVA_HOME%\bin
+java -version
+javac -version
+
+javac *.java
+
+start rmiregistry
+
+java Server
+
+terminal 2:
+
+set JAVA_HOME="C:\Program Files\Java\jdk-11"
+set PATH=%JAVA_HOME%\bin
+java -version
+javac -version
+
+java Client
