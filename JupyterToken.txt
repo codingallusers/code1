@@ -1,0 +1,57 @@
+def main():
+    # Getting the number of nodes in the ring
+    n = int(input("Enter the number of nodes you want in the ring: "))
+    
+    # Displaying the ring formation
+    print("Ring Formed is as below: ")
+    for i in range(n):
+        print(f"{i} ", end="")
+    print("0 (loop back to Node 0)")
+    print("Note: Initially, Token is at Node 0")
+    
+    token = 0  # Initial token position is at node 0
+    choice = 0  # Variable to control sending data again
+    
+    while True:
+        # Getting sender, receiver, and data
+        sender = -1
+        while sender < 0 or sender >= n:
+            sender = int(input("\nEnter Sender: "))
+            if sender < 0 or sender >= n:
+                print(f"Enter a valid sender between 0 & {n - 1}")
+        
+        receiver = -1
+        while receiver < 0 or receiver >= n:
+            receiver = int(input("\nEnter Receiver: "))
+            if receiver < 0 or receiver >= n:
+                print(f"Enter a valid receiver between 0 & {n - 1}")
+        
+        data = int(input("\nEnter Data to Send: "))
+        
+        print(f"\nSender is {sender} and Sending Data is {data}")
+        
+        # Token Passing
+        print("\nToken Passing: [Previous Node -> Next Node]")
+        for i in range(token, sender):
+            print(f" {i} ->", end="")
+        print(f" {sender}")
+        print(f"Note: Current Token is at Node {sender}")
+        
+        # Data Passing
+        print("\nData Passing: [Previous Node -> Next Node]")
+        for i in range(sender, receiver):
+            print(f" {i} ->", end="")
+        print(f" {receiver}")
+        
+        print(f"\nReceiver: {receiver}, Received the data: {data}")
+        
+        # Update the token to the sender's position
+        token = sender
+        
+        # Asking user if they want to send data again
+        choice = int(input("\nDo you want to send data again? If yes Enter 1, If no Enter 0: "))
+        if choice == 0:
+            break
+
+if __name__ == "__main__":
+    main()
