@@ -1,1 +1,1 @@
-javac 8 --release .java
+javac --release 8 .java
