@@ -1,0 +1,59 @@
+class BullyAlgorithm:
+    def __init__(self, processes):  # constructor
+        self.processes = sorted(processes)  # Sorted for simplicity
+        self.coordinator = max(self.processes)
+
+    def start_election(self, initiator):  #This function starts an election process.
+        print(f"\nProcess {initiator} initiates an election.")
+        higher = [p for p in self.processes if p > initiator] # list of higher process ids
+        if not higher:
+            self.coordinator = initiator
+            print(f"Process {initiator} becomes the coordinator.")
+        else:
+            print(f"Processes higher than {initiator}: {higher}")
+            for p in higher:
+                print(f"Process {initiator} sends election message to {p}")
+                # Simulating response from higher processes
+                responder = max(higher)
+                print(f"Process {responder} responds. It will start its own election.")
+                self.start_election(responder)
+
+    def get_coordinator(self):
+        return self.coordinator
+
+
+
+# Testing BullyAlgorithm
+bully = BullyAlgorithm([1, 2, 3, 4, 5])
+bully.start_election(2)
+print("Final Coordinator:", bully.get_coordinator())
+
+
+
+class RingAlgorithm:
+    def __init__(self, processes):
+        self.processes = processes
+        self.n = len(processes)
+        self.coordinator = max(processes)
+
+    def start_election(self, initiator_index):
+        print(f"\nProcess {self.processes[initiator_index]} initiates an election.")
+        token = [self.processes[initiator_index]]
+        index = (initiator_index + 1) % self.n
+        while self.processes[index] != self.processes[initiator_index]:
+            print(f"Token passed to {self.processes[index]}")
+            token.append(self.processes[index])
+            index = (index + 1) % self.n
+        elected = max(token)
+        self.coordinator = elected
+        print(f"Process {elected} becomes the new coordinator.")
+
+    def get_coordinator(self):
+        return self.coordinator
+
+
+
+# Testing RingAlgorithm
+ring = RingAlgorithm([1, 2, 3, 4, 5])
+ring.start_election(1)
+print("Final Coordinator:", ring.get_coordinator())
